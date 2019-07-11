@@ -1,0 +1,67 @@
+## Assignments
+
+#### Basic tasks
+
+##### Use ansible modules to create a user along with
+
+- Home directory as /tmp/username
+- Provide shell /bin/bash
+- Create a group for user
+- Associate that user with newly created group
+```
+ansible remote_server -i inventory -m user -a "name=zafar shell=/bin/bash home=/zafar/ group=admin append=yes" -b
+```
+
+#### Use ansible modules to fetch system info like
+
+- Hostname
+```
+ansible remote_server  -m setup -a  'filter=ansible_hostname'
+```
+- IP addresses (public, private)
+```
+ansible remote_server -m setup -a  'filter=ansible_default_ipv4'
+```
+- Operating System
+```
+ansible remote_server -m setup -a  'filter=ansible_distribution'
+```
+- RAM information (total, used, free)
+```
+ansible remote_server -m setup -a  'filter=ansible_memory_mb'
+```
+- Disk information (total,used, free)
+
+```
+ansible remote_server -m setup -a  'filter=ansible_mounts'
+```
+-  Available Network Devices.
+```
+ansible remote_server -m setup -a  'filter=ansible_interfaces"
+```
+#### Use ansible modules to install nginx along with below steps.
+```
+ansible remote_server  -m apt -a "name=nginx state=latest" -b
+
+```
+- Start nginx service
+```
+ ansible remote_server -m service -a "name=nginx state=started"
+
+```
+- Stop nginx service
+```
+ ansible remote_server -m service -a "name=nginx state=stoped"
+
+```
+- Along with hosting a custom HTML Page on it displaying your Name. /var/www/html/index.nginx-debian.html
+```
+ ansible remote_server -m copy -a "src=/var/www/html/index.nginx-debian.html dest=/var/www/html" -b
+
+```
+- Restart nginx service
+```
+ ansible remote_server -m service -a "name=nginx state=restarted"
+
+```
+
