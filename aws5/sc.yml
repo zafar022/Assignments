@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  
+  tasks:
+    - name: Create a new EC2 key
+      ec2_key:
+        name: ec2
+        region: us-east-2
+      register: ec2_key_result
+ 
+    - name: Save private key
+      copy: content="{{ ec2_key_result.key.private_key }}" dest="/home/zafar/Downloads/ec2.pem" mode=0600
+      when: ec2_key_result.changed
+   
+    - name: create a security group in us-east-2
+      ec2_group:
+          name: ssh only
+          description: an example ec2 group
+          region: us-east-2            
+          rules:
+            - proto: tcp
+              from_port: 22
+              to_port: 22
+              cidr_ip: 0.0.0.0/0
+      register: security_group
+    - ec2:     
+        key_name: ec2
+        region: us-east-2
+        instance_type: t2.micro
+        image: ami-07d0cf3af28718ef8 
+        wait: yes
+        count: 3
+        
