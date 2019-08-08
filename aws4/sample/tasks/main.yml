@@ -1,0 +1,24 @@
+---
+# tasks file for nginx
+- name: include deb.yml
+  include: deb.yml
+  when: ansible_distribution == "Ubuntu"
+
+- name: include cent.yml
+  include: centos.yml
+  when: ansible_distribution == "Redhat"
+
+- name: remove html file
+  file: 
+    state: absent
+    path: /var/www/html/*.html
+
+- name: copy new html
+  copy: 
+    src: index.html
+    dest: /var/www/html/index.html
+    group: www-data
+    mode: 777
+
+
+...    

@@ -1,0 +1,7 @@
+---
+- name: install nginx for centos
+  yum: 
+    name: nginx
+    state: present
+...
+
