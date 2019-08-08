@@ -5,7 +5,7 @@
 
 ##### Create a vpc through wizard, having one public subnet and one private subnet.
 
-![Alt text](/Images/aws1.png)
+![Alt text](/Images/aws.png)
 
 ![Alt text](/Images/aws2.png)
 
